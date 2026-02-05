@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Results - Career Explorer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main>
+        <div class="container">
+            <h1 class="section-title">Recommended Careers</h1>
+
+            <!-- Filters Summary -->
+            <div id="filter-summary" style="margin-bottom: 30px; text-align: center; color: var(--text-light);">
+                Showing all careers
+            </div>
+
+            <!-- Results Grid -->
+            <div id="results-container" class="grid-3">
+                <!-- Cards will be injected here by JS -->
+            </div>
+
+            <!-- No Results Message -->
+            <div id="no-results" style="display: none; text-align: center; margin-top: 50px;">
+                <h3>No careers found matching your criteria.</h3>
+                <p>Try changing your filters or <a href="results.html"
+                        style="color: var(--primary-color); text-decoration: underline;">view all careers</a>.</p>
+                <br>
+                <a href="explore.html" class="btn btn-outline">Go Back to Explore</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('results-container');
+            const summary = document.getElementById('filter-summary');
+            const noResults = document.getElementById('no-results');
+
+            // Get filters from URL
+            const education = getQueryParam('education');
+            const stream = getQueryParam('stream');
+            const interest = getQueryParam('interest');
+
+            // Filter Logic
+            let filteredCareers = careers;
+
+            if (education || stream || interest) {
+                summary.innerHTML = `Filters: 
+                    ${education ? '<b>Education:</b> ' + education : ''} 
+                    ${stream ? '<b>Stream:</b> ' + stream : ''} 
+                    ${interest ? '<b>Interest:</b> ' + interest : ''}`;
+
+                filteredCareers = careers.filter(career => {
+                    // Education Filter Logic: Show careers that are accessible or aspirational
+                    let matchEdu = true;
+                    if (education) {
+                        if (career.educationLevel === 'Any') {
+                            matchEdu = true;
+                        } else if (education === 'Degree') {
+                            // If I have a Degree, I typically want Degree jobs, but could do others.
+                            // Strict matching for degree holders to find degree jobs.
+                            matchEdu = career.educationLevel === 'Degree';
+                        } else {
+                            // If I am 10th/12th/Diploma, I want to see everything I CAN aim for.
+                            // So we basically match everything except maybe PhDs if we had them.
+                            // For now, allow all.
+                            matchEdu = true;
+                        }
+                    }
+
+                    const matchStream = !stream || career.stream === stream || career.stream === 'Any';
+                    const matchInterest = !interest || career.interest === interest;
+                    return matchEdu && matchStream && matchInterest;
+                });
+            }
+
+            // Render Results
+            if (filteredCareers.length > 0) {
+                container.innerHTML = filteredCareers.map(career => `
+                    <div class="card">
+                        <h3>${career.title}</h3>
+                        <p>${career.description}</p>
+                        <div style="margin-bottom: 10px;">
+                            <span style="background: rgba(255,255,255,0.1); color: var(--accent-color); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">${career.stream}</span>
+                            <span style="background: rgba(255,255,255,0.1); color: var(--accent-color); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">${career.interest}</span>
+                        </div>
+                        <p><strong>Duration:</strong> ${career.duration}</p>
+                        <div class="card-footer">
+                            <a href="details.html?id=${career.id}" class="btn btn-outline" style="width: 100%; text-align: center;">View Details</a>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                container.style.display = 'none';
+                noResults.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

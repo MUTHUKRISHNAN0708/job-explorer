@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Details - Career Explorer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main>
+        <div class="container">
+            <div id="details-content">
+                <!-- Content injected via JS -->
+            </div>
+
+            <div style="margin-top: 40px; text-align: center;">
+                <a href="results.html" class="btn btn-outline">Back to Careers</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('details-content');
+            const id = getQueryParam('id');
+            const career = careers.find(c => c.id == id);
+
+            if (career) {
+                container.innerHTML = `
+                    <h1 class="section-title" style="text-align: left; margin-bottom: 10px;">${career.title}</h1>
+                    <div style="margin-bottom: 30px; color: var(--text-light);">
+                        <span style="margin-right: 15px;">⏱ ${career.duration}</span>
+                        <span style="margin-right: 15px;">🎓 ${career.educationLevel}</span>
+                        <span>🏷 ${career.careerType}</span>
+                    </div>
+
+                    <div class="card" style="margin-bottom: 30px;">
+                        <h2>Overview</h2>
+                        <p>${career.description}</p>
+                        
+                        <h3 style="margin-top: 20px;">Who should choose this?</h3>
+                        <p>Students from <b>${career.stream}</b> background who are interested in <b>${career.interest}</b>.</p>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="card">
+                            <h3>Skills Required</h3>
+                            <ul style="list-style: disc; margin-left: 20px;">
+                                ${career.skills.map(skill => `<li>${skill}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3>Tools to Learn</h3>
+                            <ul style="list-style: disc; margin-left: 20px;">
+                                ${career.tools.map(tool => `<li>${tool}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3>Learning Roadmap</h3>
+                            <p style="white-space: pre-line;">${career.roadmap}</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 50px;">
+                        <h2>Career not found!</h2>
+                        <p>Please go back and select a valid career.</p>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+
+</html>

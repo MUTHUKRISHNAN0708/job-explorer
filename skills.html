@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills - Career Explorer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main>
+        <div class="container">
+            <h1 class="section-title">Explore Skills</h1>
+            <p style="text-align: center; margin-bottom: 40px; color: var(--text-light);">
+                Not sure about a career? Start with a skill you like!
+            </p>
+
+            <div id="skills-container" class="grid-3">
+                <!-- Skills injected via JS -->
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('skills-container');
+
+            container.innerHTML = skills.map(skill => `
+                <div class="card">
+                    <h3>${skill.name}</h3>
+                    <p>${skill.description}</p>
+                    <div style="margin-top: 15px; border-top: 1px solid #eee; padding-top: 10px;">
+                        <small style="font-weight: bold; color: var(--primary-color);">Related Careers:</small>
+                        <ul style="margin-top: 5px; list-style: circle; margin-left: 20px; font-size: 0.9rem;">
+                            ${skill.relatedCareers.map(c => `<li>${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `).join('');
+        });
+    </script>
+</body>
+
+</html>

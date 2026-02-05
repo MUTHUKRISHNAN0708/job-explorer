@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Careers - Career Explorer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main>
+        <div class="container">
+            <h1 class="section-title">Find Your Perfect Career Match</h1>
+
+            <div class="card" style="max-width: 600px; margin: 0 auto;">
+                <form action="results.html" method="GET">
+                    <div class="form-group">
+                        <label for="education">Current Education Level</label>
+                        <select name="education" id="education" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="10th">10th Pass</option>
+                            <option value="12th">12th Pass</option>
+                            <option value="Diploma">Diploma</option>
+                            <option value="Degree">Degree / Graduate</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stream">Stream / Background</label>
+                        <select name="stream" id="stream" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="Science">Science (PCM/PCB)</option>
+                            <option value="Commerce">Commerce</option>
+                            <option value="Arts">Arts / Humanities</option>
+                            <option value="IT">IT / Computer Science</option>
+                            <option value="Any">Any / Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interest">Area of Interest</label>
+                        <select name="interest" id="interest" class="form-control">
+                            <option value="">Select Option</option>
+                            <option value="Technology">Technology & Coding</option>
+                            <option value="Creative">Creative & Design</option>
+                            <option value="Business">Business & Management</option>
+                            <option value="Government">Government Jobs</option>
+                            <option value="Science">Healthcare & Science</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Explore Careers</button>
+
+                    <p style="text-align: center; margin-top: 15px; font-size: 0.9rem;">
+                        <a href="results.html" style="text-decoration: underline;">Skip and view all careers</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
